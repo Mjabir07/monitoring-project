@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentinel-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentinel-dashboard
+  template:
+    metadata:
+      labels:
+        app: sentinel-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: docker.io/library/sentinel-dashboard:v2
+        imagePullPolicy: Never # Crucial: Tells K3s to use the local image we just imported!
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentinel-dashboard-service
+spec:
+  type: LoadBalancer # This makes the website accessible from your browser
+  ports:
+    - port: 8080       # The port you will type in your browser
+      targetPort: 5000 # The port inside the Docker container
+  selector:
+    app: sentinel-dashboard
