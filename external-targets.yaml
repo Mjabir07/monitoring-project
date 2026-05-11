@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: sentinel-web-monitors
+  namespace: sentinel-monitoring
+  labels:
+    release: sentinel-stack
+spec:
+  interval: 30s
+  module: http_2xx
+  prober:
+    url: sentinel-blackbox-prometheus-blackbox-exporter.sentinel-monitoring.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+      - https://www.booking.com/

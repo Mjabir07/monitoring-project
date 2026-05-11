@@ -1,0 +1,16 @@
+grafana:
+  # Set your master login password
+  adminPassword: "admin"
+  service:
+    type: LoadBalancer
+    port: 8080
+    targetPort: 3000
+
+# Tell Prometheus to check servers every 60 seconds
+prometheus:
+  prometheusSpec:
+    scrapeInterval: "1m"
+
+# Disable some heavy default features to save your 8GB laptop's RAM
+alertmanager:
+  enabled: false

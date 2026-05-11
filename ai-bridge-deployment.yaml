@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentinel-ai-bridge
+  namespace: sentinel-monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentinel-ai-bridge
+  template:
+    metadata:
+      labels:
+        app: sentinel-ai-bridge
+    spec:
+      containers:
+      - name: ai-bridge
+        image: docker.io/library/sentinel-ai-bridge:v1
+        imagePullPolicy: Never
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        ports:
+        - containerPort: 5001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentinel-ai-bridge-service
+  namespace: sentinel-monitoring
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5001
+      targetPort: 5001
+  selector:
+    app: sentinel-ai-bridge

@@ -1,20 +1,18 @@
-# 1. Start with a clean, lightweight Linux system that already has Python
+# Use a lightweight official Python image
 FROM python:3.11-slim
 
-# 2. Create a folder inside the container called /app
+# Set the working directory inside the container
 WORKDIR /app
 
-# 3. Copy our recipe book into the container
+# Copy our requirements and install them securely
 COPY requirements.txt .
-
-# 4. Have Docker run the PIP INSTALL automatically inside the container
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy your dashboard code into the container (we will make this code next)
-COPY dashboard.py .
+# Copy the actual python script
+COPY ai-bridge.py .
 
-# 6. Open the network port
-EXPOSE 5000
+# Expose the port the bridge listens on
+EXPOSE 5001
 
-# 7. Start the app
-CMD ["python3", "dashboard.py"]
+# Run the script
+CMD ["python3", "ai-bridge.py"]
