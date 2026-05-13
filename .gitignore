@@ -1,4 +1,16 @@
-__pycache__/
-*.pyc
+# Security & Credentials
+*.key
+*.pem
+*.token
+secrets.yaml
 .env
+
+# System & IDE Files
 .DS_Store
+.vscode/
+.idea/
+
+# Application Specific
+__pycache__/
+*.log
+node_modules/
